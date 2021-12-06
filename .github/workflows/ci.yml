@@ -46,5 +46,4 @@ jobs:
       #     description: 'Tests pending deploy'
       #     repository: 'website-tests'
       #     # success, error, failure, or pending
-      #     state: 'pending'
       #     # sha: ${{github.event.pull_request.head.sha}}
