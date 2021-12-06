@@ -1,4 +1,4 @@
-name: Test
+name: Wait for Deployment
 on: [push]
 
 jobs:
