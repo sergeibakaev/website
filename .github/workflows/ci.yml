@@ -35,7 +35,7 @@ jobs:
           owner: sergeibakaev
           repo: website-tests
           github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-          inputs: '{ "url": ${{ github.event.deployment_status.target_url }} }'
+          inputs: '{ "url": "${{ github.event.deployment_status.target_url }}" }'
           workflow_file_name: e2e.yml
       # # https://github.com/marketplace/actions/github-status-action
       # - name: set pending status
