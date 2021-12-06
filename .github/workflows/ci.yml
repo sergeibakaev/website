@@ -35,6 +35,7 @@ jobs:
           owner: sergeibakaev
           repo: website-tests
           github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+          workflow_file_name: e2e.yml
       # # https://github.com/marketplace/actions/github-status-action
       # - name: set pending status
       #   uses: Sibz/github-status-action@v1
