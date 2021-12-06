@@ -30,6 +30,11 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
+      - uses: convictional/trigger-workflow-and-wait@v1.3.0
+        with:
+          owner: sergeibakaev
+          repo: website-tests
+          github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
       # # https://github.com/marketplace/actions/github-status-action
       # - name: set pending status
       #   uses: Sibz/github-status-action@v1
