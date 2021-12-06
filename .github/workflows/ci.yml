@@ -1,28 +1,42 @@
-name: ci
-# https://docs.github.com/en/actions/reference/events-that-trigger-workflows
-on: 
-  deployment_status:
-    state:
-      - success
+name: Test
+on: [push]
+
 jobs:
-  e2e:
-    # only runs this job on successful deploy
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
-      # https://github.com/marketplace/actions/github-status-action
-      - name: set pending status
-        uses: Sibz/github-status-action@v1
+      - uses: SFDigitalServices/wait-for-deployment-action@v1
+        id: deployment
         with:
-          authToken: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-          context: 'E2E tests'
-          description: 'Tests pending deploy'
-          repository: 'website-tests'
-          # success, error, failure, or pending
-          state: 'pending'
-          # sha: ${{github.event.pull_request.head.sha}}
+          token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+          environment: Preview
+
+      - run: echo "Deployed to: ${{ steps.deployment.outputs.url }}"
+# name: ci
+# # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+# on: 
+#   deployment_status:
+#     state:
+#       - success
+# jobs:
+#   e2e:
+#     # only runs this job on successful deploy
+#     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Dump GitHub context
+#         env:
+#           GITHUB_CONTEXT: ${{ toJson(github) }}
+#         run: |
+#           echo "$GITHUB_CONTEXT"
+#       # https://github.com/marketplace/actions/github-status-action
+#       - name: set pending status
+#         uses: Sibz/github-status-action@v1
+#         with:
+#           authToken: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+#           context: 'E2E tests'
+#           description: 'Tests pending deploy'
+#           repository: 'website-tests'
+#           # success, error, failure, or pending
+#           state: 'pending'
+#           # sha: ${{github.event.pull_request.head.sha}}
