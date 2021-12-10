@@ -8,6 +8,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Print URL
+        run: |
+          echo "${{ github.event.deployment_status.target_url }}"
       - uses: ViliusSutkus89/WaitForURLsToBeAvailable@v1
         with:
           URLs: '["${{ github.event.deployment_status.target_url }}"]'
