@@ -17,7 +17,7 @@ jobs:
         id: get_latest_release
         with:
           route: GET /repos/sergeibakaev/website/commit/{commit_sha}/
-          commit_sha: ${GIT_SHA}
+          commit_sha: ${{ github.sha }}
         env:
           GITHUB_TOKEN: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
       - run: "${{ toJson(steps.get_latest_release) }}"
