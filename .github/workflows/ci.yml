@@ -19,6 +19,14 @@ jobs:
           echo "head ref: $GITHUB_HEAD_REF"
           echo "test: $GITHUB_WORKFLOW"
           echo "ref: $github.ref"
+      - name: Set environment variables
+        run: |
+          echo "GIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
+          echo "GIT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - name: Use environment variables
+        run: |
+          echo "GIT_SHA=${GIT_SHA}"
+          echo "GIT_BRANCH=${GIT_BRANCH}"
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
           owner: sergeibakaev
