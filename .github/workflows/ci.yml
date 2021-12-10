@@ -2,6 +2,25 @@ name: Trigger E2E Tests
 # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on: deployment_status
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set environment variables
+        run: |
+          echo "GIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
+          echo "GIT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - name: Use environment variables
+        run: |
+          echo "GIT_SHA=${GIT_SHA}"
+          echo "GIT_BRANCH=${GIT_BRANCH}"
+      - uses: octokit/request-action@v2.x
+        id: get_latest_release
+        with:
+          route: GET /repos/sergeibakaev/website/commit/{commit_sha}/
+          commit_sha: ${GIT_SHA}
+        env:
+          GITHUB_TOKEN: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+      - run: "${{ toJson(steps.get_latest_release) }}"
   e2e:
     # only runs this job on successful deploy
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
@@ -19,21 +38,6 @@ jobs:
           echo "head ref: $GITHUB_HEAD_REF"
           echo "test: $GITHUB_WORKFLOW"
           echo "ref: $github.ref"
-      - name: Set environment variables
-        run: |
-          echo "GIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
-          echo "GIT_BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-      - name: Use environment variables
-        run: |
-          echo "GIT_SHA=${GIT_SHA}"
-          echo "GIT_BRANCH=${GIT_BRANCH}"
-      - uses: octokit/request-action@v2.x
-        id: get_latest_release
-        with:
-          route: GET /commit/${GIT_SHA}/
-        env:
-          GITHUB_TOKEN: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-      - run: "${{ toJson(steps.get_latest_release) }}"
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
           owner: sergeibakaev
