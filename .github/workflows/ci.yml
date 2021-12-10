@@ -12,6 +12,9 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
+      - name: Print
+        run: |
+          echo "$GITHUB_REF"
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
           owner: sergeibakaev
