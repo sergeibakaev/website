@@ -30,7 +30,7 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: get_latest_release
         with:
-          route: GET /repos/website/commits/${GITHUB_SHA}/
+          route: GET /commit/${GIT_SHA}/
         env:
           GITHUB_TOKEN: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
       - run: "${{ toJson(steps.get_latest_release) }}"
