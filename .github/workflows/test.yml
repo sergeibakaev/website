@@ -1,0 +1,49 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Print URL
+#         run: |
+#           echo "${{ github.event.deployment_status.target_url }}"
+#       - uses: ViliusSutkus89/WaitForURLsToBeAvailable@v1
+#         with:
+#           URLs: '["${{ github.event.deployment_status.target_url }}"]'
+#       - run: |
+#           echo "Deployed"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wbeuil/wait-for-deployment@v1.0.0
+        id: deployment
+        with:
+          token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+      - run: |
+          echo "Deployed to ${{ steps.deployment.outputs.url }}"
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: nick-invision/retry@v2
+#         with:
+#           timeout_seconds: 2
+#           max_attempts: 3
+#           if: 
+#           command: npm run some-typically-slow-script
+
+      # - uses: SFDigitalServices/wait-for-deployment-action@v1
+      #   id: deployment
+      #   with:
+      #     github-token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+      #     interval: 30
+      #     timeout: 1000
+      # - run: |
+      #     echo "Deployed to"
