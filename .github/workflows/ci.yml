@@ -18,14 +18,6 @@ jobs:
         run: |
           echo "GIT_SHA=${GIT_SHA}"
           echo "GIT_BRANCH=${GIT_BRANCH}"
-      - uses: octokit/request-action@v2.x
-        id: get_latest_release
-        with:
-          route: GET /repos/sergeibakaev/website/commits/{commit_sha}
-          commit_sha: ${{ github.sha }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-      - run: "${{ toJson(steps.get_latest_release) }}"
   e2e:
     # only runs this job on successful deploy
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
