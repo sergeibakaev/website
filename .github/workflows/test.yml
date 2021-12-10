@@ -8,11 +8,29 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: SFDigitalServices/wait-for-deployment-action@v1
+      - uses: wbeuil/wait-for-deployment@v1.0.0
         id: deployment
         with:
-          github-token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-          interval: 30
-          timeout: 1000
+          token: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-          echo "Deployed to"
+          echo "Deployed to ${{ steps.deployment.outputs.url }}"
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: nick-invision/retry@v2
+#         with:
+#           timeout_seconds: 2
+#           max_attempts: 3
+#           if: 
+#           command: npm run some-typically-slow-script
+
+      # - uses: SFDigitalServices/wait-for-deployment-action@v1
+      #   id: deployment
+      #   with:
+      #     github-token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+      #     interval: 30
+      #     timeout: 1000
+      # - run: |
+      #     echo "Deployed to"
