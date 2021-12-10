@@ -31,7 +31,7 @@ jobs:
         id: get_latest_release
         with:
           route: GET /repos/website/commits/:commit_sha/
-          commit_sha: ${{GITHUB_SHA}}
+          commit_sha: GITHUB_SHA
         env:
           GITHUB_TOKEN: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
       - run: "${{ toJson(steps.get_latest_release) }}"
