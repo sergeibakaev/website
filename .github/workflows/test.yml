@@ -11,4 +11,4 @@ jobs:
           token: ${{ github.token }}
           environment: Preview
       - run: |
-        echo "Deployed to"
+          echo "Deployed to"
