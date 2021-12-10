@@ -14,7 +14,9 @@ jobs:
           echo "$GITHUB_CONTEXT"
       - name: Print
         run: |
-          echo "${{ GITHUB_REF }}"
+          echo "ref: $GITHUB_REF"
+          echo "head ref: $GITHUB_HEAD_REF"
+          echo "test: $GITHUB_WORKFLOW"
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
           owner: sergeibakaev
