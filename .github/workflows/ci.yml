@@ -5,6 +5,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
       - name: Set environment variables
         run: |
           echo "GIT_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
@@ -26,18 +31,6 @@ jobs:
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
-      - name: Print
-        run: |
-          echo "ref: $GITHUB_REF"
-          echo "ref: $GITHUB_REF_NAME"
-          echo "head ref: $GITHUB_HEAD_REF"
-          echo "test: $GITHUB_WORKFLOW"
-          echo "ref: $github.ref"
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
           owner: sergeibakaev
