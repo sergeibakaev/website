@@ -15,6 +15,7 @@ jobs:
       - name: Print
         run: |
           echo "ref: $GITHUB_REF"
+          echo "ref: $GITHUB_REF_NAME"
           echo "head ref: $GITHUB_HEAD_REF"
           echo "test: $GITHUB_WORKFLOW"
           echo "ref: $github.ref"
