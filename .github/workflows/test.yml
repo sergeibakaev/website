@@ -1,5 +1,8 @@
 name: Test
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -9,6 +12,6 @@ jobs:
         id: deployment
         with:
           github-token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-          environment: Preview
+          interval: 30
       - run: |
           echo "Deployed to"
