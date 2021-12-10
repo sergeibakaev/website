@@ -16,7 +16,7 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: get_latest_release
         with:
-          route: GET /repos/sergeibakaev/website/commit/{commit_sha}/
+          route: GET /repos/sergeibakaev/website/commit/{commit_sha}
           commit_sha: ${{ github.sha }}
         env:
           GITHUB_TOKEN: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
