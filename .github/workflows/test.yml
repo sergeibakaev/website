@@ -8,7 +8,7 @@ jobs:
       - uses: SFDigitalServices/wait-for-deployment-action@v1
         id: deployment
         with:
-          token: ${{ github.token }}
+          github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
           environment: Preview
       - run: |
           echo "Deployed to"
