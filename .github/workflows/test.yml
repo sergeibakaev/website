@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: wbeuil/wait-for-deployment@v1.0.0
         id: deployment
-        # with:
-        #   token: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
       - run: |
           echo "Deployed to ${{ steps.deployment.outputs.url }}"
 
