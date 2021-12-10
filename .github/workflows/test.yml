@@ -4,29 +4,29 @@ on:
     branches:
       - main
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print URL
-        run: |
-          echo "${{ github.event.deployment_status.target_url }}"
-      - uses: ViliusSutkus89/WaitForURLsToBeAvailable@v1
-        with:
-          URLs: '["${{ github.event.deployment_status.target_url }}"]'
-      - run: |
-          echo "Deployed"
-
 # jobs:
 #   test:
 #     runs-on: ubuntu-latest
 #     steps:
-#       - uses: wbeuil/wait-for-deployment@v1.0.0
-#         id: deployment
+#       - name: Print URL
+#         run: |
+#           echo "${{ github.event.deployment_status.target_url }}"
+#       - uses: ViliusSutkus89/WaitForURLsToBeAvailable@v1
 #         with:
-#           token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+#           URLs: '["${{ github.event.deployment_status.target_url }}"]'
 #       - run: |
-#           echo "Deployed to ${{ steps.deployment.outputs.url }}"
+#           echo "Deployed"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wbeuil/wait-for-deployment@v1.0.0
+        id: deployment
+        with:
+          token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+      - run: |
+          echo "Deployed to ${{ steps.deployment.outputs.url }}"
 
 # jobs:
 #   test:
