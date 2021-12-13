@@ -15,7 +15,7 @@ jobs:
         id: deployment
         with:
           token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-        run: |
+      - run: |
           echo "Deployed tto ${{ steps.deployment.outputs.url }}"
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
