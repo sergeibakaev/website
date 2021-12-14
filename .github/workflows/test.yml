@@ -41,7 +41,7 @@ jobs:
         with:
           token: ${{ github.token }}
           max_timeout: 1000
-          check_interval: 5
+          check_interval: 6
       - run: echo ${{steps.deployment.outputs.url}}
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
