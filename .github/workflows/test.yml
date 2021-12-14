@@ -11,7 +11,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Waiting for 200 from the Vercel Preview
+      - name: Waiting for the Vercel Preview
         uses: sergeibakaev/wait-for-vercel-preview@v1.1.1
         id: deployment
         with:
@@ -20,12 +20,6 @@ jobs:
           check_interval: 5
       # access preview url
       - run: echo ${{steps.deployment.outputs.url}}
-      # - uses: wbeuil/wait-for-deployment@v1.0.0
-      #   id: deployment
-      #   with:
-      #     token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-      # - run: |
-      #     echo "Deployed tto ${{ steps.deployment.outputs.url }}"
       - uses: convictional/trigger-workflow-and-wait@v1.3.0
         with:
           owner: sergeibakaev
