@@ -17,7 +17,7 @@ jobs:
         with:
           token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
           max_timeout: 1000
-          check_interval: 60
+          check_interval: 5
       # access preview url
       - run: echo ${{steps.waitFor200.outputs.url}}
       # - uses: wbeuil/wait-for-deployment@v1.0.0
