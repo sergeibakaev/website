@@ -11,16 +11,25 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: wbeuil/wait-for-deployment@v1.0.0
-        id: deployment
+      - name: Waiting for 200 from the Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.1.1
+        id: waitFor200
         with:
           token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-      - run: |
-          echo "Deployed tto ${{ steps.deployment.outputs.url }}"
-      - uses: convictional/trigger-workflow-and-wait@v1.3.0
-        with:
-          owner: sergeibakaev
-          repo: website-tests
-          github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-          inputs: '{ "deployed_url": "${{ steps.deployment.outputs.url }}" }'
-          workflow_file_name: e2e.yml
+          max_timeout: 1000
+          check_interval: 60
+      # access preview url
+      - run: echo ${{steps.waitFor200.outputs.url}}
+      # - uses: wbeuil/wait-for-deployment@v1.0.0
+      #   id: deployment
+      #   with:
+      #     token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+      # - run: |
+      #     echo "Deployed tto ${{ steps.deployment.outputs.url }}"
+      # - uses: convictional/trigger-workflow-and-wait@v1.3.0
+      #   with:
+      #     owner: sergeibakaev
+      #     repo: website-tests
+      #     github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+      #     inputs: '{ "deployed_url": "${{ steps.deployment.outputs.url }}" }'
+      #     workflow_file_name: e2e.yml
