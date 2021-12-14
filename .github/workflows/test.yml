@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Waiting for the Vercel Preview
-        uses: sergeibakaev/wait-for-vercel-preview@v1.1.1
+        uses: sergeibakaev/wait-for-vercel-preview@v1.2.1
         id: deployment
         with:
           token: ${{ github.token }}
