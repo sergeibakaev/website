@@ -47,7 +47,6 @@ jobs:
         with:
           owner: sergeibakaev
           repo: website-tests
-          ref: master
           github_token: ${{ github.token }}
           inputs: '{ "deployed_url": "${{ steps.deployment.outputs.url }}" }'
           workflow_file_name: e2e.yml
