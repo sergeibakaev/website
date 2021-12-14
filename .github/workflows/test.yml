@@ -15,7 +15,7 @@ jobs:
         uses: patrickedqvist/wait-for-vercel-preview@v1.1.1
         id: waitFor200
         with:
-          token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+          token: ${{ github.token }}
           max_timeout: 1000
           check_interval: 5
       # access preview url
