@@ -18,15 +18,15 @@ jobs:
         run: |
           echo "GIT_SHA=${GIT_SHA}"
           echo "GIT_BRANCH=${GIT_BRANCH}"
-  e2e:
-    # only runs this job on successful deploy
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: convictional/trigger-workflow-and-wait@v1.3.0
-        with:
-          owner: sergeibakaev
-          repo: website-tests
-          github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-          inputs: '{ "deployed_url": "${{ github.event.deployment_status.target_url }}" }'
-          workflow_file_name: e2e.yml
+  # e2e:
+  #   # only runs this job on successful deploy
+  #   if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: convictional/trigger-workflow-and-wait@v1.3.0
+  #       with:
+  #         owner: sergeibakaev
+  #         repo: website-tests
+  #         github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+  #         inputs: '{ "deployed_url": "${{ github.event.deployment_status.target_url }}" }'
+  #         workflow_file_name: e2e.yml
