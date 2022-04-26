@@ -49,5 +49,5 @@ jobs:
           repo: website-tests
           ref: master
           github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-          inputs: '{ "deployed_url": "${{ steps.deployment.outputs.url }}" }'
+          client_payload: '{ "deployed_url": "${{ steps.deployment.outputs.url }}" }'
           workflow_file_name: e2e.yml
