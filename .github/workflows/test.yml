@@ -36,7 +36,7 @@ jobs:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
       - name: Waiting for the Vercel Preview
-        uses: sergeibakaev/wait-for-vercel-preview@v1.3.1
+        uses: sergeibakaev/wait-for-vercel-preview@v1.3.2
         id: deployment
         with:
           token: ${{ github.token }}
