@@ -36,12 +36,13 @@ jobs:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
       - name: Waiting for the Vercel Preview
-        uses: sergeibakaev/wait-for-vercel-preview@v1.2.1
+        uses: sergeibakaev/wait-for-vercel-preview@v1.3.1
         id: deployment
         with:
           token: ${{ github.token }}
           max_timeout: 1000
           check_interval: 6
+          debug: true
       - run: echo ${{steps.deployment.outputs.url}}
       - uses: convictional/trigger-workflow-and-wait@v1.6.1
         with:
