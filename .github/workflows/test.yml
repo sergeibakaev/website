@@ -11,44 +11,50 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
-      - name: Waiting for the Vercel Preview
-        uses: sergeibakaev/wait-for-vercel-preview@v1.3.2
+      # - name: Dump GitHub context
+      #   env:
+      #     GITHUB_CONTEXT: ${{ toJson(github) }}
+      #   run: echo "$GITHUB_CONTEXT"
+      # - name: Dump job context
+      #   env:
+      #     JOB_CONTEXT: ${{ toJson(job) }}
+      #   run: echo "$JOB_CONTEXT"
+      # - name: Dump steps context
+      #   env:
+      #     STEPS_CONTEXT: ${{ toJson(steps) }}
+      #   run: echo "$STEPS_CONTEXT"
+      # - name: Dump runner context
+      #   env:
+      #     RUNNER_CONTEXT: ${{ toJson(runner) }}
+      #   run: echo "$RUNNER_CONTEXT"
+      # - name: Dump strategy context
+      #   env:
+      #     STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+      #   run: echo "$STRATEGY_CONTEXT"
+      # - name: Dump matrix context
+      #   env:
+      #     MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      #   run: echo "$MATRIX_CONTEXT"
+      # - name: Waiting for the Vercel Preview
+      #   uses: sergeibakaev/wait-for-vercel-preview@v1.3.2
+      #   id: deployment
+      #   with:
+      #     token: ${{ github.token }}
+      #     max_timeout: 1000
+      #     check_interval: 6
+      #     debug: true
+      - name: Waiting for 200 from the Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
         id: deployment
         with:
-          token: ${{ github.token }}
-          max_timeout: 1000
-          check_interval: 6
-          debug: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 60
       - run: echo ${{steps.deployment.outputs.url}}
-      - uses: convictional/trigger-workflow-and-wait@v1.6.1
-        with:
-          owner: sergeibakaev
-          repo: website-tests
-          ref: master
-          github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
-          client_payload: '{ "deployed_url": "${{ steps.deployment.outputs.url }}" }'
-          workflow_file_name: e2e.yml
+      # - uses: convictional/trigger-workflow-and-wait@v1.6.1
+      #   with:
+      #     owner: sergeibakaev
+      #     repo: website-tests
+      #     ref: master
+      #     github_token: ${{ secrets.WEBSITE_TESTS_ACCESS_TOKEN }}
+      #     client_payload: '{ "deployed_url": "${{ steps.deployment.outputs.url }}" }'
+      #     workflow_file_name: e2e.yml
